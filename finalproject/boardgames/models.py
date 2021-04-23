@@ -9,16 +9,18 @@ class Designer(models.Model):
         return self.name
 
 class Category(models.Model):
-    type = models.CharField(max_length=20)
+    type  = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.type
 
 class Player(models.Model):
-    first_name = models.CharField(max_length=25)
-    last_name = models.CharField(max_length=25)
+    first_name = models.CharField(max_length=25, blank=True)
+    last_name = models.CharField(max_length=25, blank=True)
 
-class Play(models.Model):
-    date = models.DateField(null=True, blank=True)
-    winning_player_id = models.ForeignKey(Player, on_delete=models.CASCADE, null=True, blank=True)
-    players = models.ManyToManyField(Player)
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
 class Boardgame(models.Model):
     name = models.CharField(max_length=256)
     designer = models.ManyToManyField(Designer, blank=True)
@@ -31,3 +33,9 @@ class Boardgame(models.Model):
     def __str__(self):
         return self.name
 
+class Play(models.Model):
+    boardgame = models.ForeignKey(Boardgame, on_delete=models.CASCADE, null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
+    winning_player_id = models.ForeignKey(Player, on_delete=models.CASCADE, null=True, blank=True, related_name='+')
+    players = models.ManyToManyField(Player)
+    location = models.CharField(max_length=256, blank=True)
