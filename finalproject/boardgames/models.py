@@ -15,8 +15,8 @@ class Category(models.Model):
         return self.type
 
 class Player(models.Model):
-    first_name = models.CharField(max_length=25, blank=True)
-    last_name = models.CharField(max_length=25, blank=True)
+    first_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -38,4 +38,4 @@ class Play(models.Model):
     date = models.DateField(null=True, blank=True)
     winning_player_id = models.ForeignKey(Player, on_delete=models.CASCADE, null=True, blank=True, related_name='+')
     players = models.ManyToManyField(Player)
-    location = models.CharField(max_length=256, blank=True)
+    location = models.TextField(blank=True, null=True)

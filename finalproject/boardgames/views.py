@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from rest_framework import status, viewsets, permissions
 
-# Create your views here.
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Boardgame
+from .serializers import *
+
+
+class BoardGameViewSet(viewsets.ModelViewSet):
+    queryset = Boardgame.objects.all()
+    serializer_class = BoardgameSerializer
+    
