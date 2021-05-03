@@ -20,8 +20,8 @@ const BoardgameList = () => {
     }
 
     return (
-        <div>
-            <h1>Boardgames</h1>
+        <div class="flex flex-wrap space-y-5 space-x-5 justify-center">
+            <h1 class="min-w-full px-3 py-3 text-2xl bg-green-200">Boardgames</h1>
             {!boardgames ? "Loading..." : boardgames.length === 0 ? "Loading..." : boardgames.map( ({name, category, year_published, min_players, max_players, edition, designer}) => {
                 return (
                     <BoardgameItem
