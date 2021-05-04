@@ -1,7 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef, useState } from 'react'
+import CategoryList from './CategoryList';
 
-const BoardGameModal = ({open, handleClose, handleCreate}) => {
+const BoardGameModal = (props) => {
     const [name, setName] = useState("");
     const [year, setYear] = useState("");
     const [minPlayers, setMinPlayers] = useState(0);
@@ -20,25 +21,24 @@ const BoardGameModal = ({open, handleClose, handleCreate}) => {
             "category": "Worker Placement",
             "designer": [
                 {
-                    "name": "Ben Rosset",
                     "id": 1
                 }
             ]
         };
         console.log(item);
-        handleCreate(item);
-        handleClose();
+        props.handleCreate(item);
+        props.handleClose();
     }
 
     return (
-        <Transition.Root show={open} as={Fragment}>
+        <Transition.Root show={props.open} as={Fragment}>
             <Dialog 
                 as="div"
                 static
-                onClose={handleClose} 
+                onClose={props.handleClose} 
                 className="fixed z-10 inset-0 overflow-y-auto"
                 initialFocus={cancelButtonRef}
-                open={open}
+                open={props.open}
             >
                 <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <Transition.Child
@@ -74,18 +74,30 @@ const BoardGameModal = ({open, handleClose, handleCreate}) => {
                                             Board Games
                                         </Dialog.Title>
                                             <div className="mt-2">
-                                                <form>
-                                                    <label>Name</label>
-                                                    <input type="text" placeholder="Name of game" value={name} onChange={(e) => setName(e.target.value)} /> 
+                                                <form className="flex flex-wrap space-y-2">
+                                                    <div>
+                                                        <label className="mr-2">Name:</label>
+                                                        <input type="text" placeholder="Name of game" value={name} onChange={(e) => setName(e.target.value)} />
+                                                    </div>
 
-                                                    <label>Year</label>
-                                                    <input type="text" placeholder="Year" value={year} onChange={(e) => setYear(e.target.value)} />
+                                                    <div className="w-full">
+                                                        <CategoryList categories={props.categories} />
+                                                    </div>
 
-                                                    <label>Minimum number of players</label>
-                                                    <input type="number" value={minPlayers} onChange={(e) => setMinPlayers(e.target.value)} />
+                                                    <div>
+                                                        <label className="mr-2">Year:</label>
+                                                        <input type="text" placeholder="Year" value={year} onChange={(e) => setYear(e.target.value)} />
+                                                    </div>
 
-                                                    <label>Maximum number of players</label>
-                                                    <input type="number" value={maxPlayers} onChange={(e) => setMaxPlayer(e.target.value)} />
+                                                    <div>
+                                                        <label className="mr-2">Minimum number of players:</label>
+                                                        <input type="number" value={minPlayers} onChange={(e) => setMinPlayers(e.target.value)} />
+                                                    </div>
+
+                                                    <div>
+                                                        <label className="mr-2">Maximum number of players:</label>
+                                                        <input type="number" value={maxPlayers} onChange={(e) => setMaxPlayer(e.target.value)} />
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -102,7 +114,7 @@ const BoardGameModal = ({open, handleClose, handleCreate}) => {
                                 <button
                                     type="button"
                                     className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                    onClick={handleClose}
+                                    onClick={props.handleClose}
                                     ref={cancelButtonRef}
                                 >
                                     Cancel

@@ -5,11 +5,26 @@ import BoardGameFormModal from './BoardGameFormModal';
 
 const BoardgameList = () => {
     const [boardgames, setBoardgames] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         getGameList();
     },[]);
+
+    useEffect(() => {
+        getCatList();
+    }, []);
+
+    const getCatList = () => {
+        axios
+            .get('/api/category')
+            .then(res => {
+                setCategories(res.data);
+            }
+                )
+            .catch((err) => console.log(err));
+    }
 
     const getGameList = () => {
         axios
@@ -38,13 +53,13 @@ const BoardgameList = () => {
 
     return (
         <div>
-            <BoardGameFormModal open={isOpen} handleClose={closeModal} handleCreate={handleCreate}/>
+            <BoardGameFormModal open={isOpen} handleClose={closeModal} handleCreate={handleCreate} categories={categories}/>
             <h1 className="min-w-full px-3 py-3 text-2xl bg-green-200" onClick={() => setIsOpen(true)}>Boardgames</h1>
             <div className="flex flex-wrap space-y-5 space-x-5 justify-center">
-                {!boardgames ? "Loading..." : boardgames.length === 0 ? "Loading..." : boardgames.map( ({name, category, year_published, min_players, max_players, edition, designer}) => {
+                {!boardgames ? "Loading..." : boardgames.length === 0 ? "Loading..." : boardgames.map( ({pk, name, category, year_published, min_players, max_players, edition, designer}) => {
                     return (
                         <BoardgameItem
-                            key={name}
+                            key={pk}
                             name={name}
                             category={category}
                             year={year_published}

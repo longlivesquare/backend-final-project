@@ -10,9 +10,9 @@ class DesignerSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('type',)
+        fields = ('type','id')
 
-class BoardgameSerializer(serializers.ModelSerializer):
+class BoardgameSerializer(WritableNestedModelSerializer):
     category = serializers.StringRelatedField()
     designer = DesignerSerializer(many=True, required=False)
 
@@ -20,9 +20,9 @@ class BoardgameSerializer(serializers.ModelSerializer):
         model = Boardgame
         fields = ('pk','name', 'year_published','min_players', 'max_players', 'edition', 'category',  'designer')
 
-    def create(self, validated_data):
+    """ def create(self, validated_data):
         designer_data = validated_data.pop('designer')
         boardgame = Boardgame.objects.create(**validated_data)
         Designer.objects.create(**designer_data)
-        return boardgame
+        return boardgame """
 

@@ -21,6 +21,7 @@ from boardgames import views
 router = routers.DefaultRouter()
 router.register(r'boardgames', views.BoardGameViewSet)
 router.register(r'designer', views.DesignerViewSet)
+router.register(r'category', views.CategoryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
