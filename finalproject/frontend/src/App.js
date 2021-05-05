@@ -1,9 +1,12 @@
 import './App.css';
 import BoardgameList from './Boardgames/BoardgameList';
+import CategoryProvider from './Providers/CategoryProvider';
 
 function App() {
   return (
-    <BoardgameList />
+    <CategoryProvider>
+      <BoardgameList />
+    </CategoryProvider>
   );
 }
 

@@ -3,31 +3,43 @@ import { Fragment, useRef, useState } from 'react'
 import CategoryList from './CategoryList';
 
 const BoardGameModal = (props) => {
-    const [name, setName] = useState("");
-    const [year, setYear] = useState("");
-    const [minPlayers, setMinPlayers] = useState(0);
-    const [maxPlayers, setMaxPlayer] = useState(0);
+
+    const [name, setName] = useState(props.name ? props.name : "");
+    const [year, setYear] = useState(props.year ? props.year : "");
+    const [minPlayers, setMinPlayers] = useState(props.minPlayers ? props.minPlayers : 0);
+    const [maxPlayers, setMaxPlayer] = useState(props.maxPlayers ? props.maxPlayers : 0);
+    const [edition, setEdition] = useState(props.edition ? props.edition : "");
+    const [categ, setCatego] = useState({id: 0, type: ""})
     
     const cancelButtonRef = useRef();
 
     const handleSubmit = () => {
         let item = {
-            "pk": 100,
-            "name": "Brew Crafters",
-            "year_published": 2015,
-            "min_players": 2,
-            "max_players": 5,
-            "edition": null,
-            "category": "Worker Placement",
+            "name": name,
+            "year_published": year,
+            "min_players": minPlayers,
+            "max_players": maxPlayers,
+            "edition": edition,
+            "category": categ,
             "designer": [
                 {
-                    "id": 1
+                    "id": 1,
+                    "name": "Ben Rosset"
                 }
             ]
         };
+
+        if (props.id) {
+            item.pk = props.id
+        }
+
         console.log(item);
-        props.handleCreate(item);
-        props.handleClose();
+        props.handleSubmit(item);
+    }
+
+    const saveCategory = (cat) => {
+        console.log(cat);
+        setCatego(cat);
     }
 
     return (
@@ -81,12 +93,17 @@ const BoardGameModal = (props) => {
                                                     </div>
 
                                                     <div className="w-full">
-                                                        <CategoryList categories={props.categories} />
+                                                        <CategoryList categories={props.categories} saveCat={saveCategory} />
                                                     </div>
 
                                                     <div>
                                                         <label className="mr-2">Year:</label>
                                                         <input type="text" placeholder="Year" value={year} onChange={(e) => setYear(e.target.value)} />
+                                                    </div>
+
+                                                    <div>
+                                                        <label className="mr-2">Edition</label>
+                                                        <input type="text" placeholder="Edition" value={edition} onChange={(e) => setEdition(e.target.value)} />
                                                     </div>
 
                                                     <div>

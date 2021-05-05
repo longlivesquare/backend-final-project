@@ -1,15 +1,19 @@
-import {  useState, Fragment } from "react"
+import {  useState, Fragment} from "react"
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
 
-const CategoryList = ({categories}) => {
+const CategoryList = ({categories, saveCat}) => {
     const [selectCat, setSelectedCat] = useState(categories[0])
-    console.log(categories)
+    
+    const changeCategory = (value) => {
+        setSelectedCat(value);
+        saveCat(value);
+    }
 
     return(
         <div className="w-72 top-16">
-        <Listbox value={selectCat} onChange={setSelectedCat}>
+        <Listbox value={selectCat} onChange={changeCategory}>
         {({ open }) => (
             <>
             <div className="relative mt-1">

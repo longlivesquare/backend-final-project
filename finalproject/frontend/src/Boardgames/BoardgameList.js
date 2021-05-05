@@ -47,26 +47,38 @@ const BoardgameList = () => {
         setIsOpen(false);
     }
 
-    const handleCreate = (item) => {
-        axios.post('/api/boardgames/', item).then(refreshList)
+    const handleSubmit = (item) => {
+        setIsOpen(false);
+        if(item.pk) {
+            axios.put(`/api/boardgames/${item.id}`, item).then(refreshList)
+        } else {
+            axios.post('/api/boardgames/', item).then(refreshList)
+        }
     }
 
     return (
         <div>
-            <BoardGameFormModal open={isOpen} handleClose={closeModal} handleCreate={handleCreate} categories={categories}/>
+            <BoardGameFormModal open={isOpen} handleClose={closeModal} handleSubmit={handleSubmit} categories={categories}/>
             <h1 className="min-w-full px-3 py-3 text-2xl bg-green-200" onClick={() => setIsOpen(true)}>Boardgames</h1>
             <div className="flex flex-wrap space-y-5 space-x-5 justify-center">
                 {!boardgames ? "Loading..." : boardgames.length === 0 ? "Loading..." : boardgames.map( ({pk, name, category, year_published, min_players, max_players, edition, designer}) => {
+                    const deleteBoardgame = () => {
+                        axios
+                            .delete(`/api/boardgames/${pk}`)
+                            .then(() => refreshList());
+                    }
+                    
                     return (
                         <BoardgameItem
                             key={pk}
                             name={name}
-                            category={category}
+                            category={category ? category.type : null}
                             year={year_published}
                             minPlayer={min_players}
                             maxPlayer={max_players}
                             edition={edition}
                             designers={designer}
+                            handleBgDelete={deleteBoardgame}
                         />
                     )
                 })}
