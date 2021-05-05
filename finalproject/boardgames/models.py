@@ -14,6 +14,9 @@ class Category(models.Model):
     def __str__(self):
         return self.type
 
+class Location(models.Model):
+    place = models.TextField()
+
 class Player(models.Model):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
@@ -38,4 +41,4 @@ class Play(models.Model):
     date = models.DateField(null=True, blank=True)
     winning_player_id = models.ForeignKey(Player, on_delete=models.CASCADE, null=True, blank=True, related_name='+')
     players = models.ManyToManyField(Player)
-    location = models.TextField(blank=True, null=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)

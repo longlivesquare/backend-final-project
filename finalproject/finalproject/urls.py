@@ -22,9 +22,12 @@ router = routers.DefaultRouter()
 router.register(r'boardgames', views.BoardGameViewSet)
 router.register(r'designer', views.DesignerViewSet)
 router.register(r'category', views.CategoryViewSet)
+router.register(r'play', views.PlayViewSet)
+router.register(r'player', views.PlayerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('plate/', include('django_spaghetti.urls')),
     #path('api/', include('rest_framework.urls', namespace='rest_framework'))
 ]

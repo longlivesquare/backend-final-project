@@ -64,7 +64,7 @@ const BoardgameList = () => {
                 {!boardgames ? "Loading..." : boardgames.length === 0 ? "Loading..." : boardgames.map( ({pk, name, category, year_published, min_players, max_players, edition, designer}) => {
                     const deleteBoardgame = () => {
                         axios
-                            .delete(`/api/boardgames/${pk}`)
+                            .delete(`/api/boardgames/${pk}/`)
                             .then(() => refreshList());
                     }
                     
