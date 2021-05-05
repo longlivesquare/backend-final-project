@@ -5,11 +5,12 @@ import CategoryList from './CategoryList';
 const BoardGameModal = (props) => {
 
     const [name, setName] = useState(props.name ? props.name : "");
-    const [year, setYear] = useState(props.year ? props.year : "");
-    const [minPlayers, setMinPlayers] = useState(props.minPlayers ? props.minPlayers : 0);
-    const [maxPlayers, setMaxPlayer] = useState(props.maxPlayers ? props.maxPlayers : 0);
-    const [edition, setEdition] = useState(props.edition ? props.edition : "");
-    const [categ, setCatego] = useState({id: 0, type: ""})
+    const [year, setYear] = useState(props.year ? props.year : null);
+    const [minPlayers, setMinPlayers] = useState(props.minPlayers ? props.minPlayers : null);
+    const [maxPlayers, setMaxPlayer] = useState(props.maxPlayers ? props.maxPlayers : null);
+    const [edition, setEdition] = useState(props.edition ? props.edition : null);
+    const [category, setCatego] = useState(null)
+    const [designer, setDesigner] = useState(props.designers ? props.designers : [])
     
     const cancelButtonRef = useRef();
 
@@ -20,20 +21,23 @@ const BoardGameModal = (props) => {
             "min_players": minPlayers,
             "max_players": maxPlayers,
             "edition": edition,
-            "category": categ,
-            "designer": [
-                {
-                    "id": 1,
-                    "name": "Ben Rosset"
-                }
-            ]
+            //"category": category,
+            //"designer": designer
         };
 
-        if (props.id) {
-            item.pk = props.id
+        if (category) {
+            item.category = category
         }
 
-        console.log(item);
+        if(designer.length > 0) {
+            item.designer = designer;
+        }
+
+        if (props.pk) {
+            item.pk = props.pk
+        }
+
+        props.handleClose();
         props.handleSubmit(item);
     }
 

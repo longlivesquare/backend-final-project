@@ -13,7 +13,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('type','id')
 
 class BoardgameSerializer(WritableNestedModelSerializer):
-    category = CategorySerializer(many=False);
+    category = CategorySerializer(many=False, required=False);
     designer = DesignerSerializer(many=True, required=False)
 
     class Meta:
