@@ -82,6 +82,7 @@ const BoardgameList = () => {
                             pk={pk}
                             name={name}
                             category={category ? category.type : null}
+                            categ_id={category ? category.id : null}
                             year={year_published}
                             minPlayer={min_players}
                             maxPlayer={max_players}

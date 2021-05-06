@@ -9,7 +9,7 @@ const BoardGameModal = (props) => {
     const [minPlayers, setMinPlayers] = useState(props.minPlayers ? props.minPlayers : "");
     const [maxPlayers, setMaxPlayer] = useState(props.maxPlayers ? props.maxPlayers : "");
     const [edition, setEdition] = useState(props.edition ? props.edition : "");
-    const [category, setCatego] = useState(props.category ? props.category : null);
+    const [category, setCatego] = useState(props.category ? {type: props.category, id:props.categ_id} : null);
     const [designer, setDesigner] = useState(props.designers ? props.designers : []);
     
     const cancelButtonRef = useRef();
@@ -26,6 +26,7 @@ const BoardGameModal = (props) => {
         };
 
         if (category) {
+            console.log(category)
             item.category = category
         }
 
