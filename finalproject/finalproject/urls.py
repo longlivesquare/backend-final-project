@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework import routers
 from boardgames import views
 
@@ -24,10 +24,11 @@ router.register(r'designer', views.DesignerViewSet)
 router.register(r'category', views.CategoryViewSet)
 router.register(r'play', views.PlayViewSet)
 router.register(r'player', views.PlayerViewSet)
+router.register(r'location', views.LocationViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('plate/', include('django_spaghetti.urls')),
+    re_path(r'^plate/', include('django_spaghetti.urls')),
     #path('api/', include('rest_framework.urls', namespace='rest_framework'))
 ]

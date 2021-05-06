@@ -2,11 +2,13 @@ import {useEffect, useState } from 'react'
 import axios from 'axios'
 import BoardgameItem from './BoardgameItem';
 import BoardGameFormModal from './BoardGameFormModal';
+import { PlusCircleIcon } from '@heroicons/react/solid'
 
 const BoardgameList = () => {
     const [boardgames, setBoardgames] = useState([]);
     const [categories, setCategories] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const [createTextHidden, setCreateTextHidden] = useState(true);
 
     useEffect(() => {
         getGameList();
@@ -56,9 +58,15 @@ const BoardgameList = () => {
     }
 
     return (
-        <div>
+        <div className="bg-gradient-to-r from-yellow-300 to-green-300">
             <BoardGameFormModal open={isOpen} handleClose={closeModal} handleSubmit={handleSubmit} categories={categories}/>
-            <h1 className="min-w-full px-3 py-3 text-2xl bg-green-200" onClick={() => setIsOpen(true)}>Boardgames</h1>
+            <h1 className="min-w-full px-3 py-3 text-2xl bg-green-600 h-20" onClick={() => setIsOpen(true)}>Boardgames</h1>
+            <PlusCircleIcon 
+                className="w-16 h-16 pl-4 text-green-700 hover:text-green-300" 
+                onMouseOver={() => setCreateTextHidden(false)} 
+                onMouseLeave={() => setCreateTextHidden(true)} 
+                onClick={() => setIsOpen(true)}/>
+            <span className={createTextHidden ? "hidden" : "px-4 bg-green-900 text-yellow-400 rounded-md"}>Add a new game</span>
             <div className="pb-5"></div>
             <div className="flex flex-wrap space-y-5 space-x-5 justify-center">
                 {!boardgames ? "Loading..." : boardgames.length === 0 ? "Loading..." : boardgames.map( ({pk, name, category, year_published, min_players, max_players, edition, designer}) => {

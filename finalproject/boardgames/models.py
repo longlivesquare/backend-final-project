@@ -17,6 +17,9 @@ class Category(models.Model):
 class Location(models.Model):
     place = models.TextField()
 
+    def __st__(self):
+        return self.place
+
 class Player(models.Model):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
@@ -37,7 +40,7 @@ class Boardgame(models.Model):
         return self.name
 
 class Play(models.Model):
-    boardgame = models.ForeignKey(Boardgame, on_delete=models.CASCADE, null=True, blank=True)
+    boardgame = models.ForeignKey(Boardgame, on_delete=models.CASCADE)
     date = models.DateField(null=True, blank=True)
     winning_player_id = models.ForeignKey(Player, on_delete=models.CASCADE, null=True, blank=True, related_name='+')
     players = models.ManyToManyField(Player)

@@ -5,22 +5,22 @@ import CategoryList from './CategoryList';
 const BoardGameModal = (props) => {
 
     const [name, setName] = useState(props.name ? props.name : "");
-    const [year, setYear] = useState(props.year ? props.year : null);
-    const [minPlayers, setMinPlayers] = useState(props.minPlayers ? props.minPlayers : null);
-    const [maxPlayers, setMaxPlayer] = useState(props.maxPlayers ? props.maxPlayers : null);
-    const [edition, setEdition] = useState(props.edition ? props.edition : null);
-    const [category, setCatego] = useState(null)
-    const [designer, setDesigner] = useState(props.designers ? props.designers : [])
+    const [year, setYear] = useState(props.year ? props.year : "");
+    const [minPlayers, setMinPlayers] = useState(props.minPlayers ? props.minPlayers : "");
+    const [maxPlayers, setMaxPlayer] = useState(props.maxPlayers ? props.maxPlayers : "");
+    const [edition, setEdition] = useState(props.edition ? props.edition : "");
+    const [category, setCatego] = useState(props.category ? props.category : null);
+    const [designer, setDesigner] = useState(props.designers ? props.designers : []);
     
     const cancelButtonRef = useRef();
 
     const handleSubmit = () => {
         let item = {
             "name": name,
-            "year_published": year,
-            "min_players": minPlayers,
-            "max_players": maxPlayers,
-            "edition": edition,
+            "year_published": year === "" ? null : year,
+            "min_players": minPlayers === "" ? null: minPlayers,
+            "max_players": maxPlayers === "" ? null: maxPlayers,
+            "edition": edition === "" ? null: edition,
             //"category": category,
             //"designer": designer
         };

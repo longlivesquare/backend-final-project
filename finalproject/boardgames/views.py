@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework import status, viewsets, permissions
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Boardgame, Designer, Category, Play, Player
+from .models import Boardgame, Designer, Category, Play, Player, Location
 from .serializers import *
 
 
@@ -26,3 +26,7 @@ class PlayerViewSet(viewsets.ModelViewSet):
 class PlayViewSet(viewsets.ModelViewSet):
     queryset = Play.objects.all()
     serializer_class = PlaySerializer
+
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
